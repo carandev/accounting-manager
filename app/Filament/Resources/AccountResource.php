@@ -6,6 +6,7 @@ use App\Filament\Resources\AccountResource\Pages;
 use App\Filament\Resources\AccountResource\Pages\CreateAccount;
 use App\Filament\Resources\AccountResource\Pages\EditAccount;
 use App\Filament\Resources\AccountResource\Pages\ListAccounts;
+use App\Filament\Resources\AccountResource\Pages\ViewAccount;
 use App\Filament\Resources\AccountResource\RelationManagers;
 use App\Filament\Resources\AccountResource\RelationManagers\TransactionsRelationManager;
 use App\Models\Account;
@@ -29,7 +30,8 @@ class AccountResource extends Resource
     {
         return $form
             ->schema([
-                TextInput::make('name')->required()->maxLength(50)
+                TextInput::make('name')->required()->maxLength(50),
+                TextInput::make('amount')->readOnly()
             ]);
     }
 
@@ -40,12 +42,13 @@ class AccountResource extends Resource
                 TextColumn::make('name')->searchable(),
                 TextColumn::make('amount')->sortable()->money('COP'),
                 TextColumn::make('created_at')
+                ->dateTime('d M Y')
             ])
             ->filters([
                 //
             ])
             ->actions([
-                Tables\Actions\EditAction::make(),
+                Tables\Actions\ViewAction::make(),
             ])
             ->bulkActions([
                 Tables\Actions\BulkActionGroup::make([
@@ -66,6 +69,7 @@ class AccountResource extends Resource
         return [
             'index' => ListAccounts::route('/'),
             'create' => CreateAccount::route('/create'),
+            'view' => ViewAccount::route('/{record}'),
             'edit' => EditAccount::route('/{record}/edit'),
         ];
     }

@@ -29,9 +29,11 @@ class TransactionsRelationManager extends RelationManager
                     ->required(),
                 Forms\Components\TextInput::make('amount')
                     ->required()
-                    ->numeric(),
+                    ->numeric()
+                    ->prefix('$'),
                 Forms\Components\Textarea::make('summary')
-                    ->maxLength(500),
+                    ->maxLength(500)
+                    ->columnSpanFull(),
             ]);
     }
 
@@ -41,10 +43,13 @@ class TransactionsRelationManager extends RelationManager
             ->recordTitleAttribute('id')
             ->columns([
                 Tables\Columns\TextColumn::make('id'),
+                Tables\Columns\TextColumn::make('created_at')
+                ->dateTime('d M Y'),
                 Tables\Columns\TextColumn::make('name')
                 ->searchable(),
                 Tables\Columns\TextColumn::make('type'),
                 Tables\Columns\TextColumn::make('amount')
+                ->money('COP')
                 ->sortable(),
             ])
             ->filters([

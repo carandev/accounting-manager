@@ -9,6 +9,6 @@ class Transaction extends Model
 {
     public function account(): BelongsTo
     {
-        return $this->belongsTo('accounts');
+        return $this->belongsTo(Account::class);
     }
 }
