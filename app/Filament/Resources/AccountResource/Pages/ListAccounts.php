@@ -10,10 +10,14 @@ class ListAccounts extends ListRecords
 {
     protected static string $resource = AccountResource::class;
 
+    protected static ?string $breadcrumb = 'Listar';
+
     protected function getHeaderActions(): array
     {
         return [
-            Actions\CreateAction::make(),
+            Actions\CreateAction::make()
+                ->icon('heroicon-o-plus')
+                ->label('Nueva cuenta'),
         ];
     }
 }

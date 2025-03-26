@@ -10,6 +10,10 @@ class ViewAccount extends ViewRecord
 {
     protected static string $resource = AccountResource::class;
 
+    protected static ?string $title = 'Detalles de la cuenta';
+
+    protected static ?string $breadcrumb = 'Detalles';
+
     // Método que se ejecuta para personalizar los detalles de la cuenta
     protected function getHeaderActions(): array
     {
