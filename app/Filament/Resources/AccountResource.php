@@ -31,7 +31,7 @@ class AccountResource extends Resource
         return $form
             ->schema([
                 TextInput::make('name')->required()->maxLength(50),
-                TextInput::make('amount')->readOnly()
+                TextInput::make('amount')->readOnly()->default(0)
             ]);
     }
 
