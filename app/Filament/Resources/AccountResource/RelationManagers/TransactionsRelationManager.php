@@ -2,7 +2,6 @@
 
 namespace App\Filament\Resources\AccountResource\RelationManagers;
 
-use App\Models\Transaction;
 use Filament\Forms;
 use Filament\Forms\Components\Select;
 use Filament\Forms\Form;
@@ -92,5 +91,10 @@ class TransactionsRelationManager extends RelationManager
                     ->label('Eliminar'),
             ])
             ->bulkActions([]);
+    }
+
+    public function isReadOnly(): bool
+    {
+        return false;
     }
 }
