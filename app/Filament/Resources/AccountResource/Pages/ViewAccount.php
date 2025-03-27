@@ -6,6 +6,7 @@ use App\Filament\Resources\AccountResource;
 use Filament\Infolists\Components\TextEntry;
 use Filament\Infolists\Infolist;
 use Filament\Resources\Pages\ViewRecord;
+use Filament\Actions;
 
 class ViewAccount extends ViewRecord
 {
@@ -27,5 +28,14 @@ class ViewAccount extends ViewRecord
                     ->label('Saldo')
                     ->money('COP')
             ]);
+    }
+
+    protected function getHeaderActions(): array
+    {
+        return [
+            Actions\EditAction::make()
+                ->icon('heroicon-o-pencil')
+                ->label('Editar'),
+        ];
     }
 }

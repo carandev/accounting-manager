@@ -72,6 +72,10 @@ class AccountResource extends Resource
 
     public static function getRelations(): array
     {
+        if (request()->routeIs('filament.dashboard.resources.accounts.edit')) {
+            return [];
+        }
+
         return [
             TransactionsRelationManager::class
         ];
