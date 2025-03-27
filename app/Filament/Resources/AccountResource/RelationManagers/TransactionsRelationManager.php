@@ -2,7 +2,9 @@
 
 namespace App\Filament\Resources\AccountResource\RelationManagers;
 
+use App\Models\Transaction;
 use Filament\Forms;
+use Filament\Forms\Components\Select;
 use Filament\Forms\Form;
 use Filament\Resources\RelationManagers\RelationManager;
 use Filament\Tables;
@@ -38,6 +40,16 @@ class TransactionsRelationManager extends RelationManager
                     ->required()
                     ->numeric()
                     ->prefix('$'),
+                Select::make('categories')
+                    ->label('Categorías')
+                    ->multiple()
+                    ->relationship('categories', 'name')
+                    ->searchable()
+                    ->preload()
+                    ->createOptionForm([
+                        Forms\Components\TextInput::make('name')
+                            ->required()
+                    ]),
                 Forms\Components\Textarea::make('summary')
                     ->label('Detalles')
                     ->maxLength(500)
@@ -64,6 +76,9 @@ class TransactionsRelationManager extends RelationManager
                     ->label('Valor')
                     ->money('COP')
                     ->sortable(),
+                Tables\Columns\TextColumn::make('categories.name')
+                    ->label('Categorías')
+                    ->sortable(),
             ])
             ->filters([])
             ->headerActions([
@@ -76,7 +91,6 @@ class TransactionsRelationManager extends RelationManager
                 Tables\Actions\DeleteAction::make()
                     ->label('Eliminar'),
             ])
-            ->bulkActions([
-            ]);
+            ->bulkActions([]);
     }
 }

@@ -3,7 +3,11 @@
 namespace App\Filament\Resources\AccountResource\Pages;
 
 use App\Filament\Resources\AccountResource;
+use App\Filament\Resources\AccountResource\RelationManagers\TransactionsRelationManager;
+use App\Models\Transaction;
 use Filament\Actions\EditAction;
+use Filament\Infolists\Components\TextEntry;
+use Filament\Infolists\Infolist;
 use Filament\Resources\Pages\ViewRecord;
 
 class ViewAccount extends ViewRecord
@@ -23,5 +27,14 @@ class ViewAccount extends ViewRecord
                 ->icon('heroicon-o-pencil')
                 ->color('primary'),
         ];
+    }
+
+    public function infolist(Infolist $infolist): Infolist
+    {
+        return $infolist
+            ->schema([
+                TextEntry::make('name'),
+                TextEntry::make('amount')
+            ]);
     }
 }

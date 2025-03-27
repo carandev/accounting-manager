@@ -49,6 +49,9 @@ class AccountResource extends Resource
                     ->label('Saldo')
                     ->sortable()
                     ->money('COP'),
+                TextColumn::make('categories.name')
+                    ->label('Categorías')
+                    ->sortable(),
                 TextColumn::make('created_at')
                     ->label('F. Registro')
                     ->dateTime('d M Y')
