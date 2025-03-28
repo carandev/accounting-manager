@@ -3,7 +3,10 @@
 namespace App\Filament\Resources;
 
 use App\Filament\Resources\UserResource\Pages;
+use App\Filament\Resources\UserResource\Pages\CreateUser;
+use App\Filament\Resources\UserResource\Pages\EditUser;
 use App\Models\User;
+use Filament\Forms\Components\Select;
 use Filament\Forms\Components\TextInput;
 use Filament\Forms\Form;
 use Filament\Resources\Resource;
@@ -23,13 +26,23 @@ class UserResource extends Resource
     {
         return $form
             ->schema([
-                TextInput::make('name')->label('Nombre'),
+                TextInput::make('name')
+                    ->required()
+                    ->label('Nombre'),
                 TextInput::make('email')
+                    ->required()
                     ->email()
                     ->label('Correo'),
                 TextInput::make('password')
-                    ->password()
-                    ->label('Contrasena')
+                    ->required(fn ($livewire) => $livewire instanceof CreateUser)
+                    ->hidden(fn ($livewire) => $livewire instanceof EditUser)
+                    ->password(),
+                Select::make('roles')
+                    ->required()
+                    ->relationship('roles', 'name')
+                    ->multiple()
+                    ->preload()
+                    ->searchable(),
             ]);
     }
 

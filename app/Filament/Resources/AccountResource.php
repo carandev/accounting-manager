@@ -8,6 +8,7 @@ use App\Filament\Resources\AccountResource\Pages\ListAccounts;
 use App\Filament\Resources\AccountResource\Pages\ViewAccount;
 use App\Filament\Resources\AccountResource\RelationManagers\TransactionsRelationManager;
 use App\Models\Account;
+use BezhanSalleh\FilamentShield\Contracts\HasShieldPermissions;
 use Filament\Forms\Components\TextInput;
 use Filament\Forms\Form;
 use Filament\Resources\Resource;
@@ -15,7 +16,7 @@ use Filament\Tables;
 use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Table;
 
-class AccountResource extends Resource
+class AccountResource extends Resource implements HasShieldPermissions
 {
     protected static ?string $model = Account::class;
 
@@ -61,7 +62,7 @@ class AccountResource extends Resource
             ])
             ->actions([
                 Tables\Actions\ViewAction::make()
-                ->label('Consultar'),
+                    ->label('Consultar'),
             ])
             ->bulkActions([
                 Tables\Actions\BulkActionGroup::make([
@@ -88,6 +89,19 @@ class AccountResource extends Resource
             'create' => CreateAccount::route('/create'),
             'view' => ViewAccount::route('/{record}'),
             'edit' => EditAccount::route('/{record}/edit'),
+        ];
+    }
+
+    public static function getPermissionPrefixes(): array
+    {
+        return [
+            'view',
+            'view_any',
+            'create',
+            'update',
+            'delete',
+            'delete_any',
+            'publish'
         ];
     }
 }
