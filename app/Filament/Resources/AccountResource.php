@@ -7,6 +7,8 @@ use App\Filament\Resources\AccountResource\Pages\EditAccount;
 use App\Filament\Resources\AccountResource\Pages\ListAccounts;
 use App\Filament\Resources\AccountResource\Pages\ViewAccount;
 use App\Filament\Resources\AccountResource\RelationManagers\TransactionsRelationManager;
+use App\Filament\Resources\AccountResource\Widgets\AccountChart;
+use App\Filament\Resources\AccountResource\Widgets\AccountOverview;
 use App\Models\Account;
 use Filament\Forms\Components\Hidden;
 use Filament\Forms\Components\TextInput;
@@ -94,6 +96,13 @@ class AccountResource extends Resource
             'create' => CreateAccount::route('/create'),
             'view' => ViewAccount::route('/{record}'),
             'edit' => EditAccount::route('/{record}/edit'),
+        ];
+    }
+
+    public static function getWidgets(): array
+    {
+        return [
+            AccountChart::class
         ];
     }
 }
