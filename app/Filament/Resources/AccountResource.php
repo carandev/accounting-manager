@@ -8,15 +8,17 @@ use App\Filament\Resources\AccountResource\Pages\ListAccounts;
 use App\Filament\Resources\AccountResource\Pages\ViewAccount;
 use App\Filament\Resources\AccountResource\RelationManagers\TransactionsRelationManager;
 use App\Models\Account;
-use BezhanSalleh\FilamentShield\Contracts\HasShieldPermissions;
+use Filament\Forms\Components\Hidden;
 use Filament\Forms\Components\TextInput;
 use Filament\Forms\Form;
 use Filament\Resources\Resource;
 use Filament\Tables;
 use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Table;
+use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Support\Facades\Auth;
 
-class AccountResource extends Resource implements HasShieldPermissions
+class AccountResource extends Resource
 {
     protected static ?string $model = Account::class;
 
@@ -35,13 +37,16 @@ class AccountResource extends Resource implements HasShieldPermissions
                 TextInput::make('amount')
                     ->label('Saldo')
                     ->readOnly()
-                    ->default(0)
+                    ->default(0),
+                Hidden::make('user_id')
+                    ->default(Auth::id())
             ]);
     }
 
     public static function table(Table $table): Table
     {
         return $table
+            ->modifyQueryUsing(fn ($query) => $query->where('user_id', Auth::id()))
             ->columns([
                 TextColumn::make('name')
                     ->label('Nombre')
@@ -89,19 +94,6 @@ class AccountResource extends Resource implements HasShieldPermissions
             'create' => CreateAccount::route('/create'),
             'view' => ViewAccount::route('/{record}'),
             'edit' => EditAccount::route('/{record}/edit'),
-        ];
-    }
-
-    public static function getPermissionPrefixes(): array
-    {
-        return [
-            'view',
-            'view_any',
-            'create',
-            'update',
-            'delete',
-            'delete_any',
-            'publish'
         ];
     }
 }
