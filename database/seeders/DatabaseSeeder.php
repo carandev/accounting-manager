@@ -3,8 +3,9 @@
 namespace Database\Seeders;
 
 use App\Models\User;
-// use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
+use Spatie\Permission\Models\Role;
+use Spatie\Permission\PermissionRegistrar;
 
 class DatabaseSeeder extends Seeder
 {
@@ -13,11 +14,29 @@ class DatabaseSeeder extends Seeder
      */
     public function run(): void
     {
-        // User::factory(10)->create();
+        // Limpiar la caché de permisos
+        app()[PermissionRegistrar::class]->forgetCachedPermissions();
 
-        User::factory()->create([
-            'name' => 'Test User',
-            'email' => 'test@example.com',
+        // Crear usuario por defecto
+        $user = User::firstOrCreate([
+            'email' => 'carlosandres0741@gmail.com',
+        ], [
+            'name' => 'Carlos Gomez',
+            'password' => bcrypt('carlos#12345'),
+        ]);
+
+        // Asegurar que el rol `super_admin` existe
+        $role = Role::firstOrCreate([
+            'name' => 'super_admin',
+            'guard_name' => 'web',
+        ]);
+
+        // Asignar el rol al usuario
+        $user->assignRole($role);
+
+        // Llamar a otros seeders
+        $this->call([
+            ShieldSeeder::class, // Seeder de Filament Shield
         ]);
     }
 }
