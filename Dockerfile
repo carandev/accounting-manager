@@ -3,8 +3,8 @@ FROM elrincondeisma/php-for-laravel:8.3.7
 WORKDIR /app
 COPY . .
 
-# Instalar wait-for-it
-RUN apk add --no-cache wait-for-it
+# Instalar herramientas necesarias
+RUN apk add --no-cache bash netcat-openbsd
 
 RUN composer install
 RUN composer require laravel/octane
