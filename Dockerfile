@@ -7,7 +7,9 @@ RUN composer install
 RUN composer require laravel/octane
 RUN mkdir -p /app/storage/logs
 
-RUN php artisan migrate --seed
+RUN php artisan key:generate
+
+RUN php artisan migrate --seed --force
 
 RUN php artisan octane:install --server="swoole"
 
