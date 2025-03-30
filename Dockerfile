@@ -4,7 +4,7 @@ WORKDIR /app
 COPY . .
 
 # Instalar wait-for-it
-RUN apt-get update && apt-get install -y wait-for-it
+RUN apk add --no-cache wait-for-it
 
 RUN composer install
 RUN composer require laravel/octane
