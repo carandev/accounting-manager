@@ -24,6 +24,10 @@ services:
       - app-network
     depends_on:
       - mysql
+    command: >
+      sh -c "php artisan key:generate &&
+             php artisan migrate --force &&
+             php artisan octane:start --server=swoole --host=0.0.0.0"
 
   mysql:
     image: mysql:8.0
