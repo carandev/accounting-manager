@@ -10,7 +10,8 @@ services:
     environment:
       - APP_ENV=production
       - APP_DEBUG=false
-      - DB_HOST=mysql
+      - DB_CONNECTION=mysql
+      - DB_HOST=laravel-mysql
       - DB_DATABASE=accounting_manager
       - DB_USERNAME=root
       - DB_PASSWORD=admin
