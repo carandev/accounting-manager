@@ -9,7 +9,7 @@ services:
     restart: unless-stopped
     environment:
       - APP_ENV=production
-      - APP_DEBUG=false
+      - APP_DEBUG=true
       - DB_CONNECTION=mysql
       - DB_HOST=mysql
       - DB_DATABASE=accounting_manager
