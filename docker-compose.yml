@@ -26,12 +26,18 @@ services:
     depends_on:
       - mysql
     command: >
-      sh -c "php artisan key:generate &&
+      sh -c "
+             echo 'Waiting for MySQL to be ready...'
+             while ! nc -z mysql 3306; do
+               sleep 1
+             done
+             echo 'MySQL is ready!'
+             php artisan key:generate &&
              php artisan migrate --seed --force &&
              php artisan octane:start --server=swoole --host=0.0.0.0"
 
   mysql:
-    image: mysql:8.0
+    image: mariadb:10.5
     container_name: laravel-mysql
     restart: unless-stopped
     environment:
@@ -47,8 +53,6 @@ services:
       resources:
         limits:
           memory: 512M
-        reservations:
-          memory: 256M
 
 networks:
   app-network:
