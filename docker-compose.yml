@@ -11,7 +11,7 @@ services:
       - APP_ENV=production
       - APP_DEBUG=false
       - DB_CONNECTION=mysql
-      - DB_HOST=laravel-mysql
+      - DB_HOST=mysql
       - DB_DATABASE=accounting_manager
       - DB_USERNAME=root
       - DB_PASSWORD=admin
@@ -27,7 +27,7 @@ services:
       - mysql
     command: >
       sh -c "php artisan key:generate &&
-             php artisan migrate --force &&
+             php artisan migrate --seed --force &&
              php artisan octane:start --server=swoole --host=0.0.0.0"
 
   mysql:
@@ -43,6 +43,12 @@ services:
       - "3306:3306"
     networks:
       - app-network
+    deploy:
+      resources:
+        limits:
+          memory: 512M
+        reservations:
+          memory: 256M
 
 networks:
   app-network:
