@@ -1,0 +1,67 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: accounting-manager
+  labels:
+    app: accounting-manager
+  annotations:
+    spot.io/spot-instance: "true"
+    spot.io/spot-priority: "1"
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: accounting-manager
+  template:
+    metadata:
+      labels:
+        app: accounting-manager
+      annotations:
+        spot.io/spot-instance: "true"
+        spot.io/spot-priority: "1"
+    spec:
+      containers:
+      - name: accounting-manager
+        image: elrincondeisma/php-for-laravel:8.3.7
+        ports:
+        - containerPort: 8000
+        env:
+        - name: APP_ENV
+          value: "production"
+        - name: APP_DEBUG
+          value: "false"
+        - name: DB_CONNECTION
+          value: "mysql"
+        - name: DB_HOST
+          value: "mariadb"
+        - name: DB_DATABASE
+          value: "accounting_manager"
+        - name: DB_USERNAME
+          valueFrom:
+            secretKeyRef:
+              name: accounting-manager-secrets
+              key: db-username
+        - name: DB_PASSWORD
+          valueFrom:
+            secretKeyRef:
+              name: accounting-manager-secrets
+              key: db-password
+        resources:
+          requests:
+            memory: "128Mi"
+            cpu: "100m"
+          limits:
+            memory: "192Mi"
+            cpu: "200m"
+        readinessProbe:
+          httpGet:
+            path: /health
+            port: 8000
+          initialDelaySeconds: 5
+          periodSeconds: 10
+        livenessProbe:
+          httpGet:
+            path: /health
+            port: 8000
+          initialDelaySeconds: 15
+          periodSeconds: 20 
