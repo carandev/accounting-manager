@@ -27,6 +27,16 @@ server {
         log_not_found off;
     }
 
+    location /build/ {
+        root /home/site/wwwroot/public;
+        try_files $uri $uri/ =404;
+    }
+
+    location /storage/ {
+        root /home/site/wwwroot/public;
+        try_files $uri $uri/ =404;
+    }
+
     location /vendor/filament/ {
         root /home/site/wwwroot/public;
         try_files $uri $uri/ =404;
