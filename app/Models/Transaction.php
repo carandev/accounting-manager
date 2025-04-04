@@ -8,6 +8,14 @@ use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 
 class Transaction extends Model
 {
+    protected $fillable = [
+        'name',
+        'type',
+        'amount',
+        'summary',
+        'transaction_date',
+    ];
+
     public function account(): BelongsTo
     {
         return $this->belongsTo(Account::class);

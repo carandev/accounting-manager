@@ -16,8 +16,8 @@ class AccountChart extends ChartWidget
         $total_expensives = Transaction::query()
             ->where([
                 ['type', 'expensive'],
-                ['created_at', '>=', now()->startOfMonth()],
-                ['created_at', '<=', now()->endOfMonth()]
+                ['transaction_date', '>=', now()->startOfMonth()],
+                ['transaction_date', '<=', now()->endOfMonth()]
             ])
             ->whereHas('account', function ($query) {
                 $query->where('user_id', Auth::id());

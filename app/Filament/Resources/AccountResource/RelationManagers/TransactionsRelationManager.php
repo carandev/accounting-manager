@@ -39,6 +39,11 @@ class TransactionsRelationManager extends RelationManager
                     ->required()
                     ->numeric()
                     ->prefix('$'),
+                Forms\Components\DatePicker::make('transaction_date')
+                    ->label('Fecha de Transacción')
+                    ->required()
+                    ->default(now())
+                    ->displayFormat('d M Y'),
                 Select::make('categories')
                     ->label('Categorías')
                     ->multiple()
@@ -74,6 +79,10 @@ class TransactionsRelationManager extends RelationManager
                 Tables\Columns\TextColumn::make('amount')
                     ->label('Valor')
                     ->money('COP')
+                    ->sortable(),
+                Tables\Columns\TextColumn::make('transaction_date')
+                    ->label('Fecha Transacción')
+                    ->date('d M Y')
                     ->sortable(),
                 Tables\Columns\TextColumn::make('categories.name')
                     ->label('Categorías')
