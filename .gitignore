@@ -71,7 +71,7 @@ yarn.lock
 .buildpath
 
 # Laravel specific
-/bootstrap/ache
+/bootstrap/cache
 /_ide_helper.php
 /.phpstorm.meta.php
 
