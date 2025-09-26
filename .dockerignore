@@ -1,0 +1,12 @@
+mysql-data/
+noton-data/
+node_modules/
+.env
+.env.local
+.env.production
+storage/logs/
+vendor/
+.git/
+.gitignore
+docker-compose.yaml
+README.md

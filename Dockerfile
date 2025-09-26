@@ -46,10 +46,15 @@ RUN set -eux; \
     useradd --uid ${UID} --gid ${GID} --create-home accounting-manager; \
     mkdir -p /srv/www; chown accounting-manager:accounting-manager /srv/www
 
-# Install extensions
+# Install extensions and Caddy
 RUN apt-get update && \
     apt-get install --no-install-recommends -y \
-    acl gosu openssh-client git nano netcat-traditional libpq-dev libicu-dev libzip-dev supervisor && \
+    acl gosu openssh-client git nano netcat-traditional libpq-dev libicu-dev libzip-dev supervisor \
+    debian-keyring debian-archive-keyring apt-transport-https curl gnupg && \
+    curl -1sLf 'https://dl.cloudsmith.io/public/caddy/stable/gpg.key' | gpg --dearmor -o /usr/share/keyrings/caddy-stable-archive-keyring.gpg && \
+    curl -1sLf 'https://dl.cloudsmith.io/public/caddy/stable/debian.deb.txt' | tee /etc/apt/sources.list.d/caddy-stable.list && \
+    apt-get update && \
+    apt-get install --no-install-recommends -y caddy && \
     apt-get clean && \
     rm -rf /var/lib/apt/lists/*
 
