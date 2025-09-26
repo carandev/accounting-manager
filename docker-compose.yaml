@@ -1,7 +1,7 @@
 services:
   accounting_manager:
     container_name: accounting_manager
-    image: ghcr.io/carandev/accounting_manager:latest
+    image: ghcr.io/carandev/accounting-manager:latest
     restart: unless-stopped
     ports:
       - "6686:6686"
