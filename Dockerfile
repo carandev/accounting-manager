@@ -25,9 +25,9 @@ WORKDIR /srv/www
 
 COPY --from=composer_build /srv/www/vendor/filament vendor/filament
 
-# Install Node dependencies
-COPY package.json package-lock.json ./
-RUN npm install && npm cache clean --force
+# Install npm dependencies
+COPY package.json package*.json ./
+RUN npm install
 
 # Compile assets
 COPY vite.config.js ./
@@ -47,8 +47,11 @@ RUN set -eux; \
     mkdir -p /srv/www; chown accounting-manager:accounting-manager /srv/www
 
 # Install extensions
-RUN apt-get update; apt-get install --no-install-recommends -y \
-    acl gosu ssh git nano netcat-traditional libpq-dev libicu-dev libzip-dev caddy supervisor
+RUN apt-get update && \
+    apt-get install --no-install-recommends -y \
+    acl gosu openssh-client git nano netcat-traditional libpq-dev libicu-dev libzip-dev supervisor && \
+    apt-get clean && \
+    rm -rf /var/lib/apt/lists/*
 
 # Enable extensions
 RUN docker-php-ext-install bcmath pdo_mysql pdo_pgsql intl exif zip
@@ -66,7 +69,6 @@ COPY --chown=$UID:$GID app app/
 COPY --chown=$UID:$GID bootstrap bootstrap/
 COPY --chown=$UID:$GID config config/
 COPY --chown=$UID:$GID database database/
-COPY --chown=$UID:$GID lang lang/
 COPY --chown=$UID:$GID public public/
 COPY --chown=$UID:$GID resources resources/
 COPY --chown=$UID:$GID routes routes/
