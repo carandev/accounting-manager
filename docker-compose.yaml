@@ -23,7 +23,7 @@ services:
       - ./noton-data/uploads:/srv/www/storage/app/public
 
   mysql:
-    container_name: mysql
+    container_name: accounting_manager_mysql
     image: mysql:8
     restart: unless-stopped
     networks:
