@@ -1,0 +1,9 @@
+:6686 {
+    root * /srv/www/public
+    encode zstd gzip
+    file_server
+
+    php_fastcgi localhost:9000 {
+        resolve_root_symlink
+    }
+}
