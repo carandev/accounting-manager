@@ -10,4 +10,11 @@ export default defineConfig({
         }),
         tailwindcss(),
     ],
+    base: '/',
+
+    // Fuerza que los assets se resuelvan desde tu dominio en https
+    server: {
+        https: true,
+        host: '0.0.0.0',
+    },
 });
