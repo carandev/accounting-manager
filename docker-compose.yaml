@@ -9,7 +9,7 @@ services:
       - accounting_manager
     environment:
       APP_NAME: Accounting Manager
-      APP_ENV: local
+      APP_ENV: production
       APP_DEBUG: true
       APP_URL: https://accounting-manager.carandev.me
       APP_LOCALE: es
