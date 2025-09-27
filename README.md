@@ -42,7 +42,7 @@ Accounting Manager es un sistema de gestión financiera personal desarrollado co
 
 1. **Clonar el repositorio**
    ```bash
-   git clone https://github.com/tu-usuario/accounting-manager.git
+   git clone https://github.com/carandev/accounting-manager.git
    cd accounting-manager
    ```
 
