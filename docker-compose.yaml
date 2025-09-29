@@ -13,8 +13,8 @@ services:
       APP_LOCALE: es
       ASSET_URL: https://accounting-manager.carandev.me
       DB_CONNECTION: mysql
-      DB_HOST: 100.94.216.118
-      DB_PORT: 3123
+      DB_HOST: mysql-server
+      DB_PORT: 3306
       DB_DATABASE: accounting_manager_db
       DB_USERNAME: root
       DB_PASSWORD: IAjF^iRi2aZb$5
