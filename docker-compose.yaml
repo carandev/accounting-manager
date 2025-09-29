@@ -5,6 +5,8 @@ services:
     restart: unless-stopped
     ports:
       - "6686:6686"
+    networks:
+      - accounting_manager
     environment:
       APP_NAME: Accounting Manager
       APP_ENV: production
@@ -13,10 +15,28 @@ services:
       APP_LOCALE: es
       ASSET_URL: https://accounting-manager.carandev.me
       DB_CONNECTION: mysql
-      DB_HOST: 24.152.58.35
-      DB_PORT: 3123
+      DB_HOST: mysql
+      DB_PORT: 3306
       DB_DATABASE: accounting_manager_db
-      DB_USERNAME: root
-      DB_PASSWORD: IAjF^iRi2aZb$5
+      DB_USERNAME: accounting_manager_user
+      DB_PASSWORD: gjA8*^TKZS3VOm
     volumes:
       - ./noton-data/uploads:/srv/www/storage/app/public
+
+  mysql:
+    container_name: accounting_manager_mysql
+    image: mysql:8
+    restart: unless-stopped
+    networks:
+      - accounting_manager
+    environment:
+      MYSQL_DATABASE: accounting_manager_db
+      MYSQL_USER: accounting_manager_user
+      MYSQL_PASSWORD: gjA8*^TKZS3VOm
+      MYSQL_ROOT_PASSWORD: gjA8*^TKZS3VOm
+    volumes:
+      - ./mysql-data:/var/lib/mysql
+
+networks:
+  accounting_manager:
+    driver: bridge
