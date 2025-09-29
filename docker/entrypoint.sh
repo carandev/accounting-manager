@@ -16,9 +16,13 @@ fi
 # Create storage symlink
 php artisan storage:link
 
+# Ensure storage directories exist
+mkdir -p storage/logs storage/framework/cache storage/framework/sessions storage/framework/views storage/app/public
+chown -R accounting-manager:accounting-manager storage bootstrap/cache
+
 # Set up storage permissions
-setfacl -R -m u:accounting-manager:rwX storage/app/public bootstrap/cache
-setfacl -dR -m u:accounting-manager:rwX storage/app/public bootstrap/cache
+setfacl -R -m u:accounting-manager:rwX storage bootstrap/cache
+setfacl -dR -m u:accounting-manager:rwX storage bootstrap/cache
 
 # Run migrations
 php artisan migrate --force

@@ -1,7 +1,7 @@
 services:
   accounting_manager:
     container_name: accounting_manager
-    image: ghcr.io/carandev/accounting-manager:v2025.09.28-1458cfb-fixed
+    image: ghcr.io/carandev/accounting-manager:v2025.09.28-d508152-v3
     restart: unless-stopped
     ports:
       - "6686:6686"
