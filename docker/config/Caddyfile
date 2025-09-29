@@ -1,4 +1,4 @@
-6686 {
+:6686 {
     root * /srv/www/public
     encode zstd gzip
     file_server
