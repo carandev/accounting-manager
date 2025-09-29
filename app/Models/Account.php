@@ -11,4 +11,9 @@ class Account extends Model
     {
         return $this->hasMany(Transaction::class);
     }
+
+    public function destinationTransactions(): HasMany
+    {
+        return $this->hasMany(Transaction::class, 'destination_account_id');
+    }
 }

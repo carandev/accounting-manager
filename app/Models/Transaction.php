@@ -14,11 +14,17 @@ class Transaction extends Model
         'amount',
         'summary',
         'transaction_date',
+        'destination_account_id',
     ];
 
     public function account(): BelongsTo
     {
         return $this->belongsTo(Account::class);
+    }
+
+    public function destinationAccount(): BelongsTo
+    {
+        return $this->belongsTo(Account::class, 'destination_account_id');
     }
 
     public function categories() : BelongsToMany 
