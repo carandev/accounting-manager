@@ -137,6 +137,7 @@ class TransactionsRelationManager extends RelationManager
                     "Categorías",
                 ),
             ])
+            ->defaultSort('transaction_date', 'desc');
             ->filters([])
             ->headerActions([
                 Tables\Actions\CreateAction::make()->label("Nueva transaccion"),
