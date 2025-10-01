@@ -2,6 +2,7 @@
 
 namespace App\Filament\Widgets;
 
+use App\Models\Account;
 use App\Models\Transaction;
 use Filament\Widgets\StatsOverviewWidget as BaseWidget;
 use Filament\Widgets\StatsOverviewWidget\Stat;
@@ -22,10 +23,15 @@ protected function getStats(): array
             })
             ->sum('amount');
 
+        $total_amount = Account::query()
+            ->sum('amount');
+
         return [
             Stat::make('Gastos', $this->formatCurrency($total_expensives))
                 ->description('Cantidad gastada este mes')
                 ->color($this->getColorForAmount($total_expensives)),
+            Stat::make('Saldo', $this->formatCurrency($total_amount))
+                ->description('Cantidad actual de dinero')
         ];
     }
 

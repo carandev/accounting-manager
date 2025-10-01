@@ -10,6 +10,7 @@ use Filament\Forms\Get;
 use Filament\Resources\RelationManagers\RelationManager;
 use Filament\Tables;
 use Filament\Tables\Table;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Support\Facades\Auth;
 
 class TransactionsRelationManager extends RelationManager
@@ -18,12 +19,12 @@ class TransactionsRelationManager extends RelationManager
 
     protected static ?string $title = "Transacciones";
 
-    protected static ?string $label = "Transaccion";
+    protected static ?string $label = "Transacción";
 
-    public function getTableQuery(): \Illuminate\Database\Eloquent\Builder
+    public function getTableQuery(): Builder
     {
         $accountId = $this->ownerRecord->id;
-        
+
         return $this->getRelationship()->getQuery()
             ->orWhere('destination_account_id', $accountId);
     }
@@ -98,7 +99,7 @@ class TransactionsRelationManager extends RelationManager
                     ->label("Dirección")
                     ->getStateUsing(function ($record) {
                         $currentAccountId = $this->ownerRecord->id;
-                        
+
                         if ($record->type === 'transfer') {
                             if ($record->account_id == $currentAccountId) {
                                 return 'Salida a ' . $record->destinationAccount?->name;
@@ -106,7 +107,7 @@ class TransactionsRelationManager extends RelationManager
                                 return 'Entrada desde ' . $record->account?->name;
                             }
                         }
-                        
+
                         return match($record->type) {
                             'income' => 'Ingreso',
                             'expensive' => 'Gasto',
@@ -118,15 +119,15 @@ class TransactionsRelationManager extends RelationManager
                     ->money("COP")
                     ->color(function ($record) {
                         $currentAccountId = $this->ownerRecord->id;
-                        
-                        if ($record->type === 'income' || 
+
+                        if ($record->type === 'income' ||
                             ($record->type === 'transfer' && $record->destination_account_id == $currentAccountId)) {
-                            return 'success'; // Verde para ingresos y transferencias entrantes
-                        } elseif ($record->type === 'expensive' || 
+                            return 'success';
+                        } elseif ($record->type === 'expensive' ||
                                  ($record->type === 'transfer' && $record->account_id == $currentAccountId)) {
-                            return 'danger'; // Rojo para gastos y transferencias salientes
+                            return 'danger';
                         }
-                        
+
                         return 'gray';
                     }),
                 Tables\Columns\TextColumn::make("transaction_date")
@@ -137,7 +138,7 @@ class TransactionsRelationManager extends RelationManager
                     "Categorías",
                 ),
             ])
-            ->defaultSort('transaction_date', 'desc');
+            ->defaultSort('transaction_date', 'desc')
             ->filters([])
             ->headerActions([
                 Tables\Actions\CreateAction::make()->label("Nueva transaccion"),
